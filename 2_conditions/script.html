@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            
+        </title>
+        
+    </head>
+    <body>
+        
+        <form action="#" method="get">
+            <input type="text" id="word" name="word" placeholder="Enter your words."/>
+            <input type="submit" id="submit" name="submit" value="submit"/><br><br>
+        </form>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            $( document ).ready(function() {
+                
+                var vowels = "aeiouy";
+                var cons = "bcdfghjklmnpqrstvwxyz";
+                var text = "";
+
+                $("#submit").click(function() {
+
+                    text = $("#word").val();
+                    if (!text.length == 0) { 
+                    var word = text.toLocaleLowerCase().split(" ");
+                    
+                    for(var i =0; i<word.length; i++) {
+                        if (vowels.includes(word[i][0].toString())) {
+                            document.write(word[i].toString() + "way ");
+                        }
+                        else if (cons.includes(word[i][0].toString())) {
+                            if (cons.includes(word[i][1].toString())) {
+                                document.write(word[i].toString().slice(2, word[i].length) + word[i].toString().slice(0, 2) + "ay ");
+                            }
+                            else {
+                                document.write(word[i].toString().slice(1, word[i].length) + word[i][0].toString() + "ay ");
+                            }
+                        }
+
+                    }
+                }
+                    else {
+                        document.write("Your input can't be translated.")
+                    }
+            });
+                
+        });
+            
+            
+
+        </script>
+    </body>
+</html>
