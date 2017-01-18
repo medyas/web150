@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>
-            
+            Assignment 2
         </title>
         
     </head>
@@ -22,7 +22,8 @@
                 var text = "";
 
                 $("#submit").click(function() {
-
+                    
+                    // i didn't know whether to use prompt or read from form input, so i used form input
                     text = $("#word").val();
                     if (!text.length == 0) { 
                     var word = text.toLocaleLowerCase().split(" ");
