@@ -8,6 +8,10 @@
             th, td {
                 width: 100px;
                 text-align: center;
+                border: 1px dotted #0a4184;
+            }
+            #data td {
+                border: 1px solid #0a4184;
             }
         </style>
     </head>
@@ -34,6 +38,21 @@
             for(var i=0; i<masterList.length; i++) {
                 $('#indata').append("<tr><td>"+masterList[i][0]+"</td><td>"+masterList[i][1]+"</td></tr>");
             }
+            
+            var min = parseInt(masterList[0][1]), max = parseInt(masterList[0][1]), sum = 0;
+            for(var i = 0; i < masterList.length; i++){
+                var temp = parseInt(masterList[i][1]);
+                sum += temp;
+                if (min > temp)
+                    min = temp;
+                if (max < temp)
+                    max = temp;
+            }
+            
+            $('#indata').append("<tr id='data'><td>Total Students</td><td>"+masterList.length+"</td></tr>");
+            $('#indata').append("<tr id='data'><td>Minimum</td><td>"+min+"</td></tr>");
+            $('#indata').append("<tr id='data'><td>Maximum</td><td>"+max+"</td></tr>");
+            $('#indata').append("<tr id='data'><td>Average</td><td>"+sum/masterList.length+"</td></tr>");
 
 
         </script>
