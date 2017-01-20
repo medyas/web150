@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Assignment 3
+        </title>
+        <style>
+            th, td {
+                width: 100px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h3>Assignment 3</h3>
+        <table id="indata">
+            <tr>
+                <th>Student Name </th>
+                <th>Score </th>
+            </tr>
+            
+        </table>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            var grades = "jim|25, sue|32, mary|34, ann|22, ted|28, frank|15, lisa|19, mike|30, ahn|26, vishaya|27";
+            
+            var list = grades.split(",");
+            
+            var masterList = [];
+            for(var i=0; i<list.length; i++) {
+                masterList.push(list[i].split("|"));
+            }
+            
+            for(var i=0; i<masterList.length; i++) {
+                $('#indata').append("<tr><td>"+masterList[i][0]+"</td><td>"+masterList[i][1]+"</td></tr>");
+            }
+
+
+        </script>
+    </body>
+</html>
