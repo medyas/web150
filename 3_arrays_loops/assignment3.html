@@ -28,19 +28,18 @@
         <script type="text/javascript">
             var grades = "jim|25, sue|32, mary|34, ann|22, ted|28, frank|15, lisa|19, mike|30, ahn|26, vishaya|27";
             
-            var list = grades.split(",");
+            var list = grades.split(", ");
             
             var masterList = [];
             for(var i=0; i<list.length; i++) {
                 masterList.push(list[i].split("|"));
             }
             
-            for(var i=0; i<masterList.length; i++) {
-                $('#indata').append("<tr><td>"+masterList[i][0]+"</td><td>"+masterList[i][1]+"</td></tr>");
-            }
+            masterList.sort();
             
             var min = parseInt(masterList[0][1]), max = parseInt(masterList[0][1]), sum = 0;
-            for(var i = 0; i < masterList.length; i++){
+            for(var i=0; i<masterList.length; i++) {
+                $('#indata').append("<tr><td>"+masterList[i][0]+"</td><td>"+masterList[i][1]+"</td></tr>");
                 var temp = parseInt(masterList[i][1]);
                 sum += temp;
                 if (min > temp)
@@ -48,6 +47,8 @@
                 if (max < temp)
                     max = temp;
             }
+            
+            
             
             $('#indata').append("<tr id='data'><td>Total Students</td><td>"+masterList.length+"</td></tr>");
             $('#indata').append("<tr id='data'><td>Minimum</td><td>"+min+"</td></tr>");
