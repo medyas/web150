@@ -10,7 +10,7 @@
                 text-align: center;
                 border: 1px dotted #0a4184;
             }
-            #data td, #data th{
+            #data td, #data th {
                 border: 1px solid #0a4184;
             }
         </style>
@@ -18,7 +18,7 @@
     <body>
         <h3>Assignment 3</h3>
         <table id="indata">
-            <tr id='data'>
+            <tr id="data">
                 <th>Student Name </th>
                 <th>Score </th>
             </tr>
@@ -39,7 +39,7 @@
             
             var min = parseInt(masterList[0][1]), max = parseInt(masterList[0][1]), sum = 0;
             for(var i=0; i<masterList.length; i++) {
-                $('#indata').append("<tr><td>"+masterList[i][0].charAt(0).toUpperCase()+masterList[i][0].slice(1)+"</td><td>"+masterList[i][1]+"</td></tr>");
+                $('#indata').append("<tr><td><b>"+masterList[i][0].charAt(0).toUpperCase()+"</b>"+masterList[i][0].slice(1)+"</td><td>"+masterList[i][1]+"</td></tr>");
                 var temp = parseInt(masterList[i][1]);
                 sum += temp;
                 if (min > temp)
@@ -53,8 +53,6 @@
             $('#indata').append("<tr id='data'><td>Minimum</td><td>"+min+"</td></tr>");
             $('#indata').append("<tr id='data'><td>Maximum</td><td>"+max+"</td></tr>");
             $('#indata').append("<tr id='data'><td>Average</td><td>"+sum/masterList.length+"</td></tr>");
-
-
         </script>
     </body>
 </html>
