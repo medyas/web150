@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <style>
+        #message, span {
+          color: red;
+        }
+        #msg {
+          color: green;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Functions & validation</h1>
+
+<form id="form1" action="#" onsubmit="return validateForm(this);">
+  first name: <input type="text" name="firstname"><span> *</span><br>
+  last name: <input type="text" name="lastname"><span> *</span><br>
+  password: <input type="password" name="password"><span> *</span><br>
+
+  <button >Check</button>
+</form>
+
+<hr><div id="message"></div>
+<div id="msg"></div>
+
+<script>
+function validateForm(myForm) {
+  var firstname = myForm.firstname.value; // get text of firstname field
+  var lastname = myForm.lastname.value;
+  var password = myForm.password.value;
+
+  if (firstname == "") {
+      $("#message").html("Don't leave your firstname empty"); 
+      return false;
+  }
+
+  if (lastname == "") {
+      $("#message").html("Don't leave your lastname empty"); 
+      return false;
+  }
+
+  if (validpass(password)) {
+    $("#message").html("Invalid password"); 
+      return false;
+  }
+
+  $("#message").html(""); 
+  $("#msg").html("Your submission is correct !");
+
+  //delay(2000);
+  return true;
+  
+}
+
+function validpass(pass) {
+  var upper = true, lower = true;
+
+  for(var i in pass) {
+    if(pass.charCodeAt(i) >= 97 && pass.charCodeAt(i) <= 122) {
+      lower = false;
+      break;
+    }
+
+  }
+
+  for(var i in pass) {
+    if(pass.charCodeAt(i) >= 65 && pass.charCodeAt(i) <= 90) {
+      upper = false;
+      break;
+    }
+  }
+
+
+  if (pass == "" || pass.length < 8 || upper || lower) 
+    return true;
+
+  return false;
+
+}
+</script>
+
+</body>
+</html> 
