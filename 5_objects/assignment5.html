@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Robo Dealer</title>
+        <style type="text/css">
+            div {
+                display: inline-block;
+                margin: 20px;
+                border: 1px solid;
+                width: 250px;
+            }
+            button {
+                float: right;
+                margin: 10px;
+                border: 2px;
+                border-radius: 8px;
+                color: white;
+                background-color: #3385ff;
+                box-shadow: 2px 1px 10px #338fad;
+            }
+            ul {
+                list-style-type: none;
+            }
+            p, span {
+                margin: 10px;
+            }
+            span {
+                font-family: "Times New Roman", Georgia, Serif;
+                color: #b30000;
+
+            }
+        </style>
+        <script
+  src="https://code.jquery.com/jquery-3.1.1.js"
+  integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+  crossorigin="anonymous"></script>
+    </head>
+    
+    <body>
+        <div id="5-cards">
+            <ul>
+                
+            </ul>
+            <button>5-card hands</button>
+        </div>
+        
+        <div id="3-cards">
+            <ul>
+                
+            </ul>
+            <p>
+                
+            </p>
+            <span></span>
+            <button>3-card hands</button>
+        </div>
+
+        <!--
+            <div id="display">
+                <ul>
+                    
+                </ul>
+            </div>
+        -->
+        
+        <script type="text/javascript">
+
+                var score = [];
+
+            var suits = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"];
+            var values = ["Clubs", "Diamonds", "Hearts", "Spades"];
+            
+            var cards = [];
+                cards.getCard = function() {
+                    
+                    var random = Math.floor(Math.random() * 52); 
+                    msg = "<li>-  "+this[random].suit+" of "+this[random].value+"</li>";
+
+                    score.push(random);
+
+                    return msg;
+                }
+
+                cards.display = function() {
+                    for(var i=0; i<52; i++) {
+                        msg = "<li>-  "+this[i].suit+" of "+this[i].value+"      "+i+"</li>";
+                        $("#display ul").append(msg)
+                    }
+                }
+
+            var num = 0;
+            for(var i=0; i<4; i++){
+                for(var j=0; j<13; j++){
+                  cards[num] = {value: values[i], suit: suits[j]};
+                  num++;
+                }
+            }
+            /* ---------------------------------------------------- */
+
+            $("#5-cards button").click(function(){
+                score = [];
+                $("#5-cards ul").html(randomCards(5));
+            });
+            
+            $("#3-cards button").click(function(){
+                $("#3-cards p").empty();
+                $("#3-cards span").empty();
+
+                score = [];
+                $("#3-cards ul").html(randomCards(3));
+
+                var s = getScore();
+                $("#3-cards p").text("Score : "+s);
+                if(s > 21) {
+                    $("#3-cards span").text("BlackJack !!");
+                }
+            });
+            
+            /* ---------------------------------------------------- */
+
+            function randomCards(num) {
+                var msg = ""
+                for(var i=0; i<num; i++){
+                    msg += cards.getCard();
+                }
+                
+                return msg;
+            }
+
+            function getScore() {
+                var s = 0;
+
+                for(x in score) {
+                    var suits = cards[score[x]].suit;
+                    if($.inArray(suits, ["Jack", "Queen", "King"]) != -1){
+                        s += 10;
+                    }
+                    else if(suits == "Ace")
+                        s += 1;
+                    else {
+                        s += parseInt(suits);
+                    }
+                }
+                    
+                return s;
+            }
+        </script>
+    </body>
+</html>
