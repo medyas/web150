@@ -127,7 +127,7 @@
  {
 	 $("#f_elem_city").autocomplete({
 		source: function (request, response) {
-		 jQuery.getJSON(
+		 $.getJSON(
 			"http://gd.geobytes.com/AutoCompleteCity?callback=?&q="+request.term,
 			function (data) {
 			 response(data);
@@ -163,7 +163,7 @@
 			$.getJSON(link,function(data,status) {
 				  if (status == "success") {
 				    // handle successful request
-				    btnList = printData(data);
+				    printData(data);
 
 				  } else {
 				    // request failed
