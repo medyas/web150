@@ -26,6 +26,7 @@
 				background-color: #63ccee;
 				color: white;
 				border: 0px none #63ccee;
+				padding: 3px 5px;
 			}
 			#get-weather:hover {
 				margin: 5px;
@@ -33,6 +34,7 @@
 				background-color: white;
 				color: #63ccee;
 				border: 1px solid #63ccee;
+				padding: 3px 5px;
 			}
 			label {
 				color: #00b3ee;
@@ -163,11 +165,10 @@
 			  }
 			});	
 
+		$("#buttons").append("<button id='reset'>Reset</button>");
+        $("#buttons").append("<button id='one'>One per day</button>");
+
 		setTimeout(function(){
-
-	        $("#buttons").append("<button id='reset'>Reset</button>");
-            $("#buttons").append("<button id='one'>One per day</button>");
-
 		    $("#buttons button").click(function(){
 	            var Btnclass = $(this).attr('id');
 	            if(Btnclass == "reset"){
