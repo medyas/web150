@@ -4,11 +4,7 @@
 
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/themes/flick/jquery-ui.css" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 		<title>Assignment 10</title>
 
@@ -24,7 +20,6 @@
 				font-size:10px;
 				}
 			.ui-autocomplete-loading { background: white url("http://geobytes.com/images/ui-anim_basic_16x16.gif") right center no-repeat; }
-
 			#get-weather {
 				margin: 6px;
 				border-radius: 15px;
@@ -44,7 +39,7 @@
 			}
 			.weather {
 				width: 200px;
-				height: 140px;
+				height: 160px;
 				display: inline-block;
 				background-color: white;
 				border: 1px solid #b0b0b0;
@@ -83,7 +78,6 @@
 				color: white;
 				border: 0px none #63ccee;
 				padding: 4px 10px;
-
 			}
 			#buttons button:hover {
 				display: inline-block;
@@ -93,8 +87,12 @@
 				color: #63ccee;
 				border: 1px solid #63ccee;
 				padding: 4px 10px;
-
 			}
+            p.humidity {
+                text-align: center;
+                margin-top: 15px;
+                padding: 10px
+            }
 		</style>
 	</head>
 	<body>
@@ -118,11 +116,9 @@
 
 <script type="text/javascript">
 // This api was taken from http://gd.geobytes.com/
-
-
 	month = ["January","Februay","March","April","May","June","July","Auguest","September","October","November","December"];
 	week = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
-
+    
 	$(function () 
  {
 	 $("#f_elem_city").autocomplete({
@@ -149,31 +145,23 @@
 	 });
 	 $("#f_elem_city").autocomplete("option", "delay", 100);
 	});
-
-
-
 	$("#get-weather").click(function(){
 			var city = $("#f_elem_city").val().split(",")[0];
 			var link = "http://api.openweathermap.org/data/2.5/forecast?q="+city+",US&APPID=d33cfbaddfc3c25e9e3c6361f6e96b35";
 			var btnList = [];
-
 			$(".data").text("");
 			$("#buttons").html("<p>Sort By Day: </p>");
-
 			$.getJSON(link,function(data,status) {
 				  if (status == "success") {
 				    // handle successful request
 				    printData(data);
-
 				  } else {
 				    // request failed
 				    $(".data").text("Error, Could not get data!").css("color","red");
 				  }
 				});
 		
-
 	        $("#buttons").append("<button id='reset'>Reset</button>");
-
 	        setTimeout(function(){
 			    $("#buttons button").click(function(){
 		            var Btnclass = $(this).attr('id');
@@ -185,22 +173,17 @@
 		            }
 		            
 		        });
-			}, 700);
+			}, 800);
         
 		
 	});
-
-
-
 			function kelvinToF(value) {
 				  var fahrenheit = (((Number(value) - 273.15)*9)/5) + 32;
 				  return fahrenheit.toFixed(2);
 			}
-
 			function printData(data) {
 				var t;
 				var btnList = []
-
 				for(i=0; i<40; i++) {
 					var forecast_date = new Date(data.list[i].dt_txt);
 					if(forecast_date.getHours() >= 12)
@@ -212,7 +195,6 @@
 						btnList.push(c);
                     	
                 		
-
 					$(".data").append(
 					"<div class='weather "+c+"'>"
 					+"<p class='date'>"+week[forecast_date.getDay()]+", "+month[forecast_date.getMonth()]+" "+forecast_date.getDate()+" "+forecast_date.getHours()+t+"</p>"
@@ -227,14 +209,11 @@
 				}
 				
 				for(i=0; i<btnList.length; i++){
+                    console.log(btnList[i]);
             		$("#buttons").append("<button id='"+btnList[i]+"'>"+btnList[i]+"</button>");
         		}
-
 			}
-
         
 	
-
 </script>
 </html>
-
