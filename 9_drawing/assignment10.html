@@ -118,6 +118,7 @@
 // This api was taken from http://gd.geobytes.com/
 	month = ["January","Februay","March","April","May","June","July","Auguest","September","October","November","December"];
 	week = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+    var btnList = [];
     
 	$(function () 
  {
@@ -148,7 +149,7 @@
 	$("#get-weather").click(function(){
 			var city = $("#f_elem_city").val().split(",")[0];
 			var link = "http://api.openweathermap.org/data/2.5/forecast?q="+city+",US&APPID=d33cfbaddfc3c25e9e3c6361f6e96b35";
-			var btnList = [];
+			
 			$(".data").text("");
 			$("#buttons").html("<p>Sort By Day: </p>");
 			$.getJSON(link,function(data,status) {
@@ -162,12 +163,16 @@
 				});
 		
 	        $("#buttons").append("<button id='reset'>Reset</button>");
+            $("#buttons").append("<button id='one'>One per day</button>");
 	        setTimeout(function(){
 			    $("#buttons button").click(function(){
 		            var Btnclass = $(this).attr('id');
 		            if(Btnclass == "reset"){
 		                $(".weather").show();
 		            }
+                    else if(Btnclass == "one") {
+                        $(".data").children().hide().filter("."+Btnclass).show();
+                    }
 		            else {
 		                $(".data").children().hide().filter("."+Btnclass).show();
 		            }
@@ -183,7 +188,7 @@
 			}
 			function printData(data) {
 				var t;
-				var btnList = []
+                
 				for(i=0; i<40; i++) {
 					var forecast_date = new Date(data.list[i].dt_txt);
 					if(forecast_date.getHours() >= 12)
@@ -191,25 +196,38 @@
 					else 
 						t = "AM";
 					var c = month[forecast_date.getMonth()]+"-"+forecast_date.getDate();
-					if(btnList.indexOf(c) == -1)
-						btnList.push(c);
-                    	
-                		
-					$(".data").append(
-					"<div class='weather "+c+"'>"
-					+"<p class='date'>"+week[forecast_date.getDay()]+", "+month[forecast_date.getMonth()]+" "+forecast_date.getDate()+" "+forecast_date.getHours()+t+"</p>"
-					+"<p class='des'>"+data.list[i].weather[0].description+"</p><br>"
-					+"<div class='temp'><span>High: "+kelvinToF(data.list[i].main.temp_max)+"F</span><br>"
-					+"<span>Medium: "+kelvinToF(data.list[i].main.temp)+"F</span><br>"
-					+"<span>Low: "+kelvinToF(data.list[i].main.temp_min)+"F</span><br></div>"
-					+"<img class='icon' src='http://openweathermap.org/img/w/"+data.list[i].weather[0].icon+".png'>"
-					+"<br><p class='humidity'>Humidity: "+data.list[i].main.humidity+"%</p>"
-					+"</div>"
+					if(btnList.indexOf(c) == -1) {
+                        btnList.push(c);
+                        $(".data").append(
+                            "<div class='weather one "+c+"'>"
+                            +"<p class='date'>"+week[forecast_date.getDay()]+", "+month[forecast_date.getMonth()]+" "+forecast_date.getDate()+" "+forecast_date.getHours()+t+"</p>"
+                            +"<p class='des'>"+data.list[i].weather[0].description+"</p><br>"
+                            +"<div class='temp'><span>High: "+kelvinToF(data.list[i].main.temp_max)+"F</span><br>"
+                            +"<span>Medium: "+kelvinToF(data.list[i].main.temp)+"F</span><br>"
+                            +"<span>Low: "+kelvinToF(data.list[i].main.temp_min)+"F</span><br></div>"
+                            +"<img class='icon' src='http://openweathermap.org/img/w/"+data.list[i].weather[0].icon+".png'>"
+                            +"<br><p class='humidity'>Humidity: "+data.list[i].main.humidity+"%</p>"
+                            +"</div>"
 						);
+                    }
+                    else {
+                        $(".data").append(
+                            "<div class='weather "+c+"'>"
+                            +"<p class='date'>"+week[forecast_date.getDay()]+", "+month[forecast_date.getMonth()]+" "+forecast_date.getDate()+" "+forecast_date.getHours()+t+"</p>"
+                            +"<p class='des'>"+data.list[i].weather[0].description+"</p><br>"
+                            +"<div class='temp'><span>High: "+kelvinToF(data.list[i].main.temp_max)+"F</span><br>"
+                            +"<span>Medium: "+kelvinToF(data.list[i].main.temp)+"F</span><br>"
+                            +"<span>Low: "+kelvinToF(data.list[i].main.temp_min)+"F</span><br></div>"
+                            +"<img class='icon' src='http://openweathermap.org/img/w/"+data.list[i].weather[0].icon+".png'>"
+                            +"<br><p class='humidity'>Humidity: "+data.list[i].main.humidity+"%</p>"
+                            +"</div>"
+						);
+                    }
+						
+                    	
 				}
-				
+                
 				for(i=0; i<btnList.length; i++){
-                    console.log(btnList[i]);
             		$("#buttons").append("<button id='"+btnList[i]+"'>"+btnList[i]+"</button>");
         		}
 			}
