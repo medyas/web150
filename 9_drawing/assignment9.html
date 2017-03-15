@@ -4,7 +4,7 @@
 
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/themes/flick/jquery-ui.css" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 		<title>Assignment 10</title>
 
@@ -101,7 +101,7 @@
 				<form action="" method="post" name="form_citydetails" id="form_citydetails" enctype="multipart/form-data" onsubmit="return false;">
 
 					<label>City : </label><input required pattern="[a-zA-Z, ]+" placeholder="City" class="ff_elem" type="text" name="ff_nm_from[]" value="" id="f_elem_city" />
-					<input type="submit" value="Get Weather" id="get-weather" name="submit" data-loading-text="Loading...">
+					<input type="submit" value="Get Weather" id="get-weather" name="submit">
 				</form>
 			</div>
 			<div id="buttons">
@@ -146,50 +146,52 @@
 	 });
 	 $("#f_elem_city").autocomplete("option", "delay", 100);
 	});
+
 	$("#get-weather").click(function(){
-			var city = $("#f_elem_city").val().split(",")[0];
-			var link = "http://api.openweathermap.org/data/2.5/forecast?q="+city+",US&APPID=d33cfbaddfc3c25e9e3c6361f6e96b35";
-			
-			$(".data").text("");
-			$("#buttons").html("<p>Sort By Day: </p>");
-			$.getJSON(link,function(data,status) {
-				  if (status == "success") {
-				    // handle successful request
-				    printData(data);
-				  } else {
-				    // request failed
-				    $(".data").text("Error, Could not get data!").css("color","red");
-				  }
-				});
+		var city = $("#f_elem_city").val().split(",")[0];
+		var link = "http://api.openweathermap.org/data/2.5/forecast?q="+city+",US&APPID=d33cfbaddfc3c25e9e3c6361f6e96b35";
 		
+		$(".data").text("");
+		$("#buttons").html("<p>Sort By: </p>");
+		$.getJSON(link,function(data,status) {
+			  if (status == "success") {
+			    // handle successful request
+			    printData(data);
+			  } else {
+			    // request failed
+			    $(".data").text("Error, Could not get data!").css("color","red");
+			  }
+			});	
+
+		setTimeout(function(){
+
 	        $("#buttons").append("<button id='reset'>Reset</button>");
             $("#buttons").append("<button id='one'>One per day</button>");
-	        setTimeout(function(){
-			    $("#buttons button").click(function(){
-		            var Btnclass = $(this).attr('id');
-		            if(Btnclass == "reset"){
-		                $(".weather").show();
-		            }
-                    else if(Btnclass == "one") {
-                        $(".data").children().hide().filter("."+Btnclass).show();
-                    }
-		            else {
-		                $(".data").children().hide().filter("."+Btnclass).show();
-		            }
-		            
-		        });
-			}, 800);
-        
-		
+
+		    $("#buttons button").click(function(){
+	            var Btnclass = $(this).attr('id');
+	            if(Btnclass == "reset"){
+	                $(".weather").show();
+	            }
+	            else {
+	                $(".weather").hide().filter("."+Btnclass).show();
+	            }
+	            
+	        });
+		}, 700);
+
+        		
 	});
+
 			function kelvinToF(value) {
-				  var fahrenheit = (((Number(value) - 273.15)*9)/5) + 32;
-				  return fahrenheit.toFixed(2);
+				var fahrenheit = (((Number(value) - 273.15)*9)/5) + 32;
+				return fahrenheit.toFixed(2);
 			}
+
 			function printData(data) {
 				var t;
                 
-				for(i=0; i<40; i++) {
+				for(i=0; i<data.list.length; i++) {
 					var forecast_date = new Date(data.list[i].dt_txt);
 					if(forecast_date.getHours() >= 12)
 						t = "PM";
@@ -221,17 +223,17 @@
                             +"<img class='icon' src='http://openweathermap.org/img/w/"+data.list[i].weather[0].icon+".png'>"
                             +"<br><p class='humidity'>Humidity: "+data.list[i].main.humidity+"%</p>"
                             +"</div>"
-						);
+							);
                     }
-						
-                    	
+				
+					if(i == (data.list.length-1)) {
+						for(j=0; j<btnList.length; j++){
+		           			$("#buttons").append("<button id='"+btnList[j]+"'>"+btnList[j]+"</button>");
+		        		}
+					}
+
 				}
-                
-				for(i=0; i<btnList.length; i++){
-            		$("#buttons").append("<button id='"+btnList[i]+"'>"+btnList[i]+"</button>");
-        		}
-			}
-        
+        	}
 	
 </script>
 </html>
